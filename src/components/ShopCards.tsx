@@ -263,15 +263,21 @@ export function ShopDetailPanel({ ranked, activePart, alternative, onPickAlterna
           </div>
           <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">
             {otherStock.map(({ inv, part }) => (
-              <div
+              <button
                 key={part.id}
-                className="flex items-center justify-between rounded-md border border-border/60 bg-card/60 px-3 py-2 text-xs"
+                type="button"
+                onClick={() => {
+                  add({ shop, part, unitPrice: inv.price, maxStock: inv.stock });
+                  toast.success(`${part.name} added`);
+                }}
+                className="group flex items-center justify-between gap-2 rounded-md border border-border/60 bg-card/60 px-3 py-2 text-xs text-left transition-all hover:border-primary/50 hover:bg-primary/5"
               >
                 <span className="truncate text-foreground">{part.name}</span>
-                <span className="ml-2 shrink-0 font-display font-semibold text-primary">
+                <span className="ml-2 flex shrink-0 items-center gap-1.5 font-display font-semibold text-primary">
                   ₹{inv.price.toLocaleString("en-IN")}
+                  <ShoppingCart className="h-3 w-3 opacity-0 transition-opacity group-hover:opacity-100" />
                 </span>
-              </div>
+              </button>
             ))}
           </div>
         </div>
