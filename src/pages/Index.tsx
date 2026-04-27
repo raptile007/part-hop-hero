@@ -6,8 +6,10 @@ import { SearchBar } from "@/components/SearchBar";
 import { FilterBar } from "@/components/FilterBar";
 import { ShopCard, ShopDetailPanel } from "@/components/ShopCards";
 import { ShopMap } from "@/components/ShopMap";
+import { CartButton } from "@/components/CartButton";
 import { PARTS } from "@/data/parts";
 import { SHOPS } from "@/data/shops";
+import { HERO_IMAGE } from "@/data/partImages";
 import type { PartCategory, SortMode } from "@/data/types";
 import { useGeolocation } from "@/hooks/useGeolocation";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
@@ -140,11 +142,12 @@ const Index = () => {
               </div>
             </div>
           </div>
-          <div className="hero-anim hidden items-center gap-6 text-xs text-muted-foreground sm:flex">
-            <span className="flex items-center gap-2">
+          <div className="hero-anim flex items-center gap-4">
+            <span className="hidden items-center gap-2 text-xs text-muted-foreground sm:flex">
               <span className="h-1.5 w-1.5 animate-pulse-glow rounded-full bg-primary" />
               {SHOPS.length} shops · {PARTS.length} parts indexed
             </span>
+            <CartButton />
           </div>
         </div>
       </header>
