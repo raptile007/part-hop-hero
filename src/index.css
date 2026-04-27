@@ -2,104 +2,185 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
+/* Leaflet */
+@import "leaflet/dist/leaflet.css";
+
+/*
+  Bike Spare Parts Finder — Design System
+  Dark, technical, motorsport-inspired. Amber + cyan accents on graphite.
+  All colors HSL.
 */
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 220 18% 7%;
+    --foreground: 40 30% 96%;
 
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card: 220 16% 10%;
+    --card-foreground: 40 30% 96%;
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover: 220 18% 9%;
+    --popover-foreground: 40 30% 96%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Amber — primary brand (mechanic / industrial) */
+    --primary: 38 95% 55%;
+    --primary-foreground: 220 25% 8%;
+    --primary-glow: 38 100% 65%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Cyan — data / map accent */
+    --secondary: 190 90% 50%;
+    --secondary-foreground: 220 25% 8%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 220 14% 14%;
+    --muted-foreground: 40 10% 65%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 190 90% 50%;
+    --accent-foreground: 220 25% 8%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --success: 142 70% 45%;
+    --warning: 38 95% 55%;
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 40 30% 96%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 220 14% 18%;
+    --input: 220 14% 16%;
+    --ring: 38 95% 55%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 98%;
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(38 95% 55%), hsl(28 100% 60%));
+    --gradient-tech: linear-gradient(135deg, hsl(190 90% 50% / 0.15), hsl(38 95% 55% / 0.1));
+    --gradient-radial: radial-gradient(circle at 50% 0%, hsl(38 95% 55% / 0.18), transparent 60%);
+    --gradient-panel: linear-gradient(180deg, hsl(220 16% 11%), hsl(220 18% 8%));
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    /* Shadows */
+    --shadow-glow: 0 0 40px hsl(38 95% 55% / 0.35);
+    --shadow-cyan: 0 0 30px hsl(190 90% 50% / 0.4);
+    --shadow-panel: 0 20px 60px -20px hsl(0 0% 0% / 0.6);
 
-    --sidebar-primary: 240 5.9% 10%;
-
-    --sidebar-primary-foreground: 0 0% 98%;
-
-    --sidebar-accent: 240 4.8% 95.9%;
-
-    --sidebar-accent-foreground: 240 5.9% 10%;
-
-    --sidebar-border: 220 13% 91%;
-
-    --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Motion */
+    --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1);
+    --ease-out-power3: cubic-bezier(0.215, 0.61, 0.355, 1);
   }
 }
 
 @layer base {
-  * {
-    @apply border-border;
+  * { @apply border-border; }
+  html, body, #root { height: 100%; }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Space Grotesk', 'Inter', system-ui, sans-serif;
+    background-image:
+      radial-gradient(circle at 15% 10%, hsl(38 95% 55% / 0.07), transparent 40%),
+      radial-gradient(circle at 85% 90%, hsl(190 90% 50% / 0.07), transparent 45%);
+    background-attachment: fixed;
   }
 
-  body {
-    @apply bg-background text-foreground;
+  .font-display {
+    font-family: 'JetBrains Mono', 'Space Grotesk', monospace;
+    letter-spacing: -0.02em;
   }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: hsl(var(--background)); }
+  ::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: hsl(var(--primary) / 0.5); }
+}
+
+@layer components {
+  .glass-panel {
+    background: var(--gradient-panel);
+    backdrop-filter: blur(12px);
+    border: 1px solid hsl(var(--border));
+    box-shadow: var(--shadow-panel);
+  }
+
+  .tech-grid {
+    background-image:
+      linear-gradient(hsl(var(--border) / 0.4) 1px, transparent 1px),
+      linear-gradient(90deg, hsl(var(--border) / 0.4) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .glow-text {
+    text-shadow: 0 0 24px hsl(var(--primary) / 0.5);
+  }
+
+  /* Cursor follower */
+  .cursor-glow {
+    position: fixed;
+    pointer-events: none;
+    width: 480px;
+    height: 480px;
+    border-radius: 50%;
+    background: radial-gradient(circle, hsl(var(--primary) / 0.12), transparent 60%);
+    transform: translate(-50%, -50%);
+    z-index: 0;
+    transition: opacity 0.4s ease;
+    will-change: transform;
+  }
+
+  /* Leaflet dark theme */
+  .leaflet-container {
+    background: hsl(var(--background)) !important;
+    font-family: inherit;
+  }
+  .leaflet-tile {
+    filter: invert(0.92) hue-rotate(180deg) brightness(0.95) contrast(0.85) saturate(0.6);
+  }
+  .leaflet-control-attribution,
+  .leaflet-control-zoom a {
+    background: hsl(var(--card)) !important;
+    color: hsl(var(--foreground)) !important;
+    border-color: hsl(var(--border)) !important;
+  }
+  .leaflet-popup-content-wrapper, .leaflet-popup-tip {
+    background: hsl(var(--card)) !important;
+    color: hsl(var(--foreground)) !important;
+    border: 1px solid hsl(var(--border));
+  }
+
+  /* Custom marker */
+  .shop-marker {
+    width: 36px; height: 36px;
+    border-radius: 50% 50% 50% 0;
+    background: hsl(var(--muted));
+    border: 2px solid hsl(var(--border));
+    transform: rotate(-45deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s var(--ease-out-power3);
+    box-shadow: 0 4px 12px hsl(0 0% 0% / 0.4);
+  }
+  .shop-marker.has-stock {
+    background: hsl(var(--primary));
+    border-color: hsl(var(--primary-glow));
+    box-shadow: var(--shadow-glow);
+  }
+  .shop-marker.active {
+    transform: rotate(-45deg) scale(1.4);
+    z-index: 1000 !important;
+    background: hsl(var(--secondary));
+    border-color: hsl(var(--foreground));
+    box-shadow: var(--shadow-cyan);
+  }
+  .shop-marker-inner {
+    transform: rotate(45deg);
+    color: hsl(var(--primary-foreground));
+    font-weight: 700;
+    font-size: 14px;
+  }
+  .shop-marker.dimmed { opacity: 0.25; }
+}
+
+@layer utilities {
+  .bg-gradient-primary { background: var(--gradient-primary); }
+  .bg-gradient-tech { background: var(--gradient-tech); }
+  .shadow-glow { box-shadow: var(--shadow-glow); }
+  .shadow-cyan { box-shadow: var(--shadow-cyan); }
+  .ease-expo { transition-timing-function: var(--ease-out-expo); }
+  .ease-power3 { transition-timing-function: var(--ease-out-power3); }
 }
