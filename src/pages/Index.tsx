@@ -6,8 +6,10 @@ import { SearchBar } from "@/components/SearchBar";
 import { FilterBar } from "@/components/FilterBar";
 import { ShopCard, ShopDetailPanel } from "@/components/ShopCards";
 import { ShopMap } from "@/components/ShopMap";
+import { CartButton } from "@/components/CartButton";
 import { PARTS } from "@/data/parts";
 import { SHOPS } from "@/data/shops";
+import { HERO_IMAGE } from "@/data/partImages";
 import type { PartCategory, SortMode } from "@/data/types";
 import { useGeolocation } from "@/hooks/useGeolocation";
 import { useDebouncedValue } from "@/hooks/useDebouncedValue";
@@ -140,11 +142,12 @@ const Index = () => {
               </div>
             </div>
           </div>
-          <div className="hero-anim hidden items-center gap-6 text-xs text-muted-foreground sm:flex">
-            <span className="flex items-center gap-2">
+          <div className="hero-anim flex items-center gap-4">
+            <span className="hidden items-center gap-2 text-xs text-muted-foreground sm:flex">
               <span className="h-1.5 w-1.5 animate-pulse-glow rounded-full bg-primary" />
               {SHOPS.length} shops · {PARTS.length} parts indexed
             </span>
+            <CartButton />
           </div>
         </div>
       </header>
@@ -152,15 +155,24 @@ const Index = () => {
       <main className="relative z-10 mx-auto max-w-[1600px] px-4 py-6 lg:px-8">
         {/* Hero / Search */}
         <section className="hero-anim mb-6">
-          <div className="relative overflow-hidden rounded-2xl border border-border bg-gradient-tech p-6 lg:p-8">
+          <div className="relative overflow-hidden rounded-2xl border border-border bg-gradient-tech">
+            {/* Hero background image */}
+            <div className="absolute inset-0">
+              <img
+                src={HERO_IMAGE}
+                alt="Motorcycle engine close-up"
+                className="h-full w-full object-cover opacity-40"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/30" />
+            </div>
             <div className="tech-grid pointer-events-none absolute inset-0 opacity-30" />
-            <div className="relative">
+            <div className="relative p-6 lg:p-8">
               <h1 className="font-display text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-4xl">
                 Find any bike part. <span className="text-primary glow-text">In stock. Nearby.</span>
               </h1>
               <p className="mt-2 max-w-xl text-sm text-muted-foreground">
                 Real-time inventory across {SHOPS.length} workshops. Search a part — we route you to
-                the nearest shop that actually has it.
+                the nearest shop that actually has it. Add to cart and check out in seconds.
               </p>
               <div className="mt-5 max-w-2xl">
                 <SearchBar

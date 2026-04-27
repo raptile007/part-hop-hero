@@ -1,9 +1,9 @@
+/* Leaflet — must be first because @import must precede other rules */
+@import "leaflet/dist/leaflet.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* Leaflet */
-@import "leaflet/dist/leaflet.css";
 
 /*
   Bike Spare Parts Finder — Design System

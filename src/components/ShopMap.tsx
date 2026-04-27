@@ -46,14 +46,36 @@ function MapController({
   activeShop,
   userPos,
   isRealUserPos,
+  containerRef,
 }: {
   activeShop: RankedShop | undefined;
   userPos: [number, number];
   isRealUserPos: boolean;
+  containerRef: React.RefObject<HTMLDivElement>;
 }) {
   const map = useMap();
   const lastActiveId = useRef<string | null>(null);
   const flewToUser = useRef(false);
+
+  // CRITICAL FIX: Leaflet needs invalidateSize() once the container has its
+  // real dimensions (it often mounts inside a flex/grid that resolves later).
+  // Without this, only a tiny corner of tiles is rendered.
+  useEffect(() => {
+    const t1 = setTimeout(() => map.invalidateSize(), 0);
+    const t2 = setTimeout(() => map.invalidateSize(), 250);
+    const t3 = setTimeout(() => map.invalidateSize(), 800);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+  }, [map]);
+
+  // React to container resize (sidebar collapse, window resize, etc.)
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const ro = new ResizeObserver(() => map.invalidateSize());
+    ro.observe(containerRef.current);
+    const onWinResize = () => map.invalidateSize();
+    window.addEventListener("resize", onWinResize);
+    return () => { ro.disconnect(); window.removeEventListener("resize", onWinResize); };
+  }, [map, containerRef]);
 
   // Fly to active shop when it changes
   useEffect(() => {
@@ -83,19 +105,24 @@ export function ShopMap(props: Props) {
     userPos, isRealUserPos, onShopClick,
   } = props;
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const activeShop = useMemo(
     () => rankedShops.find((r) => r.shop.id === activeShopId),
     [rankedShops, activeShopId],
   );
 
   return (
-    <div className="relative h-full w-full overflow-hidden rounded-xl border border-border glass-panel">
+    <div
+      ref={containerRef}
+      className="relative h-full min-h-[420px] w-full overflow-hidden rounded-xl border border-border glass-panel"
+    >
       <MapContainer
         center={CITY_CENTER}
         zoom={12}
         scrollWheelZoom
-        className="h-full w-full"
-        zoomControl={false}
+        style={{ height: "100%", width: "100%" }}
+        zoomControl
       >
         <TileLayer
           attribution='&copy; OpenStreetMap'
@@ -123,10 +150,16 @@ export function ShopMap(props: Props) {
             />
           );
         })}
-        <MapController activeShop={activeShop} userPos={userPos} isRealUserPos={isRealUserPos} />
+        <MapController
+          activeShop={activeShop}
+          userPos={userPos}
+          isRealUserPos={isRealUserPos}
+          containerRef={containerRef}
+        />
       </MapContainer>
       {/* Top gradient overlay */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-background/80 to-transparent" />
     </div>
   );
 }
+
