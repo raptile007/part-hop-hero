@@ -155,15 +155,24 @@ const Index = () => {
       <main className="relative z-10 mx-auto max-w-[1600px] px-4 py-6 lg:px-8">
         {/* Hero / Search */}
         <section className="hero-anim mb-6">
-          <div className="relative overflow-hidden rounded-2xl border border-border bg-gradient-tech p-6 lg:p-8">
+          <div className="relative overflow-hidden rounded-2xl border border-border bg-gradient-tech">
+            {/* Hero background image */}
+            <div className="absolute inset-0">
+              <img
+                src={HERO_IMAGE}
+                alt="Motorcycle engine close-up"
+                className="h-full w-full object-cover opacity-40"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-background via-background/85 to-background/30" />
+            </div>
             <div className="tech-grid pointer-events-none absolute inset-0 opacity-30" />
-            <div className="relative">
+            <div className="relative p-6 lg:p-8">
               <h1 className="font-display text-3xl font-bold leading-tight tracking-tight text-foreground sm:text-4xl">
                 Find any bike part. <span className="text-primary glow-text">In stock. Nearby.</span>
               </h1>
               <p className="mt-2 max-w-xl text-sm text-muted-foreground">
                 Real-time inventory across {SHOPS.length} workshops. Search a part — we route you to
-                the nearest shop that actually has it.
+                the nearest shop that actually has it. Add to cart and check out in seconds.
               </p>
               <div className="mt-5 max-w-2xl">
                 <SearchBar
