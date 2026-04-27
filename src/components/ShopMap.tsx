@@ -105,19 +105,24 @@ export function ShopMap(props: Props) {
     userPos, isRealUserPos, onShopClick,
   } = props;
 
+  const containerRef = useRef<HTMLDivElement>(null);
+
   const activeShop = useMemo(
     () => rankedShops.find((r) => r.shop.id === activeShopId),
     [rankedShops, activeShopId],
   );
 
   return (
-    <div className="relative h-full w-full overflow-hidden rounded-xl border border-border glass-panel">
+    <div
+      ref={containerRef}
+      className="relative h-full min-h-[420px] w-full overflow-hidden rounded-xl border border-border glass-panel"
+    >
       <MapContainer
         center={CITY_CENTER}
         zoom={12}
         scrollWheelZoom
-        className="h-full w-full"
-        zoomControl={false}
+        style={{ height: "100%", width: "100%" }}
+        zoomControl
       >
         <TileLayer
           attribution='&copy; OpenStreetMap'
@@ -145,10 +150,16 @@ export function ShopMap(props: Props) {
             />
           );
         })}
-        <MapController activeShop={activeShop} userPos={userPos} isRealUserPos={isRealUserPos} />
+        <MapController
+          activeShop={activeShop}
+          userPos={userPos}
+          isRealUserPos={isRealUserPos}
+          containerRef={containerRef}
+        />
       </MapContainer>
       {/* Top gradient overlay */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-background/80 to-transparent" />
     </div>
   );
 }
+
