@@ -223,7 +223,7 @@ export function ShopDetailPanel({ ranked, activePart, alternative, onPickAlterna
               </div>
             </div>
 
-            {partInStock && partPrice !== null && partStock !== null && (
+            {partInStock && partPrice !== null && partStock > 0 && (
               <button
                 type="button"
                 onClick={() => {
