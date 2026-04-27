@@ -109,6 +109,7 @@ interface DetailProps {
 export function ShopDetailPanel({ ranked, activePart, alternative, onPickAlternative, onClose }: DetailProps) {
   const ref = useRef<HTMLDivElement>(null);
   const lastShopId = useRef<string | null>(null);
+  const { add } = useCart();
 
   useEffect(() => {
     if (!ranked || !ref.current) return;
@@ -186,44 +187,72 @@ export function ShopDetailPanel({ ranked, activePart, alternative, onPickAlterna
       </div>
 
       {activePart && (
-        <div className="mt-4 rounded-lg border border-border bg-muted/30 p-4">
-          <div className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
-            Selected Part
+        <div className="mt-4 overflow-hidden rounded-lg border border-border bg-muted/30">
+          <div className="relative h-32 w-full overflow-hidden">
+            <img
+              src={CATEGORY_IMAGES[activePart.category]}
+              alt={activePart.name}
+              loading="lazy"
+              className="h-full w-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-card via-card/40 to-transparent" />
+            <span className="absolute left-3 top-3 rounded-full bg-background/70 px-2 py-0.5 text-[10px] uppercase tracking-widest text-secondary backdrop-blur">
+              {activePart.category}
+            </span>
           </div>
-          <div className="mt-1 flex items-start justify-between gap-3">
-            <div className="min-w-0">
-              <div className="truncate font-medium text-foreground">{activePart.name}</div>
-              <div className="text-xs text-muted-foreground">{activePart.brand}</div>
+          <div className="p-4">
+            <div className="text-[11px] font-semibold uppercase tracking-widest text-muted-foreground">
+              Selected Part
             </div>
-            <div className="text-right">
-              {partInStock ? (
-                <>
-                  <div className="font-display text-2xl font-bold text-foreground">
-                    ₹{partPrice?.toLocaleString("en-IN")}
-                  </div>
-                  <div className="text-xs text-success">{partStock} in stock</div>
-                </>
-              ) : (
-                <div className="text-sm font-semibold text-destructive">Out of Stock</div>
-              )}
-            </div>
-          </div>
-          {!partInStock && alternative && (
-            <button
-              type="button"
-              onClick={onPickAlternative}
-              className="mt-3 flex w-full items-center justify-between rounded-md border border-primary/40 bg-primary/10 px-3 py-2 text-left text-xs transition-all hover:bg-primary/20"
-            >
-              <div>
-                <div className="font-semibold text-primary">Best alternative</div>
-                <div className="text-muted-foreground">
-                  {alternative.shop.name} · {formatKm(alternative.distanceKm)} · ₹
-                  {alternative.partPrice?.toLocaleString("en-IN")}
-                </div>
+            <div className="mt-1 flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <div className="truncate font-medium text-foreground">{activePart.name}</div>
+                <div className="text-xs text-muted-foreground">{activePart.brand}</div>
               </div>
-              <span className="text-primary">→</span>
-            </button>
-          )}
+              <div className="text-right">
+                {partInStock ? (
+                  <>
+                    <div className="font-display text-2xl font-bold text-foreground">
+                      ₹{partPrice?.toLocaleString("en-IN")}
+                    </div>
+                    <div className="text-xs text-success">{partStock} in stock</div>
+                  </>
+                ) : (
+                  <div className="text-sm font-semibold text-destructive">Out of Stock</div>
+                )}
+              </div>
+            </div>
+
+            {partInStock && partPrice !== null && partStock !== null && (
+              <button
+                type="button"
+                onClick={() => {
+                  add({ shop, part: activePart, unitPrice: partPrice, maxStock: partStock });
+                  toast.success(`${activePart.name} added to cart`);
+                }}
+                className="mt-3 flex w-full items-center justify-center gap-2 rounded-md bg-gradient-primary px-3 py-2.5 font-display text-sm font-bold text-primary-foreground shadow-glow transition-transform hover:scale-[1.01]"
+              >
+                <ShoppingCart className="h-4 w-4" /> Add to Cart
+              </button>
+            )}
+
+            {!partInStock && alternative && (
+              <button
+                type="button"
+                onClick={onPickAlternative}
+                className="mt-3 flex w-full items-center justify-between rounded-md border border-primary/40 bg-primary/10 px-3 py-2 text-left text-xs transition-all hover:bg-primary/20"
+              >
+                <div>
+                  <div className="font-semibold text-primary">Best alternative</div>
+                  <div className="text-muted-foreground">
+                    {alternative.shop.name} · {formatKm(alternative.distanceKm)} · ₹
+                    {alternative.partPrice?.toLocaleString("en-IN")}
+                  </div>
+                </div>
+                <span className="text-primary">→</span>
+              </button>
+            )}
+          </div>
         </div>
       )}
 
