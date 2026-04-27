@@ -1,11 +1,14 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { Star, MapPin, Phone, Package, CheckCircle2, XCircle, Navigation } from "lucide-react";
+import { Star, MapPin, Phone, Package, CheckCircle2, XCircle, Navigation, ShoppingCart } from "lucide-react";
 import type { RankedShop } from "@/hooks/useShopRanking";
 import type { Part } from "@/data/types";
 import { PARTS } from "@/data/parts";
+import { CATEGORY_IMAGES } from "@/data/partImages";
 import { formatKm } from "@/lib/geo";
 import { cn } from "@/lib/utils";
+import { useCart } from "@/context/CartContext";
+import { toast } from "sonner";
 
 interface ShopCardProps {
   rank: number;
