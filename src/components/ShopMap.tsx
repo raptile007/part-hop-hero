@@ -46,14 +46,36 @@ function MapController({
   activeShop,
   userPos,
   isRealUserPos,
+  containerRef,
 }: {
   activeShop: RankedShop | undefined;
   userPos: [number, number];
   isRealUserPos: boolean;
+  containerRef: React.RefObject<HTMLDivElement>;
 }) {
   const map = useMap();
   const lastActiveId = useRef<string | null>(null);
   const flewToUser = useRef(false);
+
+  // CRITICAL FIX: Leaflet needs invalidateSize() once the container has its
+  // real dimensions (it often mounts inside a flex/grid that resolves later).
+  // Without this, only a tiny corner of tiles is rendered.
+  useEffect(() => {
+    const t1 = setTimeout(() => map.invalidateSize(), 0);
+    const t2 = setTimeout(() => map.invalidateSize(), 250);
+    const t3 = setTimeout(() => map.invalidateSize(), 800);
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3); };
+  }, [map]);
+
+  // React to container resize (sidebar collapse, window resize, etc.)
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const ro = new ResizeObserver(() => map.invalidateSize());
+    ro.observe(containerRef.current);
+    const onWinResize = () => map.invalidateSize();
+    window.addEventListener("resize", onWinResize);
+    return () => { ro.disconnect(); window.removeEventListener("resize", onWinResize); };
+  }, [map, containerRef]);
 
   // Fly to active shop when it changes
   useEffect(() => {
