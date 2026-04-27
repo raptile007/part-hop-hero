@@ -184,3 +184,63 @@
   .ease-expo { transition-timing-function: var(--ease-out-expo); }
   .ease-power3 { transition-timing-function: var(--ease-out-power3); }
 }
+
+/* Premium Mode Styles */
+body.premium {
+  background-image:
+    radial-gradient(circle at 15% 10%, hsl(38 95% 55% / 0.1), transparent 40%),
+    radial-gradient(circle at 85% 90%, hsl(190 90% 50% / 0.12), transparent 45%),
+    radial-gradient(circle at 50% 50%, hsl(280 80% 60% / 0.06), transparent 60%);
+}
+
+body.premium .glass-panel {
+  background: var(--gradient-panel);
+  backdrop-filter: blur(16px);
+  border: 1px solid hsl(var(--border) / 0.8);
+  box-shadow: 0 24px 80px -12px hsl(0 0% 0% / 0.8);
+}
+
+body.premium .premium-surface {
+  background: linear-gradient(180deg, hsl(220 16% 12%), hsl(220 18% 9%));
+  backdrop-filter: blur(20px);
+  border: 1px solid hsl(var(--border) / 0.6);
+  box-shadow: 0 32px 120px -20px hsl(0 0% 0% / 0.9);
+}
+
+body.premium .premium-card {
+  background: linear-gradient(180deg, hsl(220 16% 11%), hsl(220 18% 8%));
+  backdrop-filter: blur(12px);
+  border: 1px solid hsl(var(--border) / 0.7);
+  box-shadow: 0 20px 60px -10px hsl(0 0% 0% / 0.7);
+}
+
+body.premium .premium-pill {
+  display: inline-flex;
+  align-items: center;
+  background: linear-gradient(135deg, hsl(190 90% 50% / 0.2), hsl(190 90% 50% / 0.1));
+  border: 1px solid hsl(190 90% 50% / 0.3);
+  color: hsl(190 90% 50%);
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: 0 0 12px hsl(190 90% 50% / 0.2);
+}
+
+body.premium .premium-pill-accent {
+  background: linear-gradient(135deg, hsl(38 95% 55% / 0.2), hsl(38 95% 55% / 0.1));
+  border-color: hsl(38 95% 55% / 0.3);
+  color: hsl(38 95% 55%);
+  box-shadow: 0 0 12px hsl(38 95% 55% / 0.2);
+}
+
+body.premium tr:hover {
+  background: hsl(220 16% 14% / 0.8);
+  box-shadow: inset 0 0 0 1px hsl(var(--border) / 0.5);
+}
+
+body.premium .cursor-glow {
+  background: radial-gradient(circle, hsl(var(--primary) / 0.15), transparent 70%);
+}

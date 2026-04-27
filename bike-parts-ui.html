@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bike & Vehicle Parts Finder</title>
+  <link rel="stylesheet" href="bike-parts-ui.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <main class="page-frame">
+      <section class="hero-block">
+        <div class="hero-copy">
+          <span class="eyebrow">Premium Parts Discovery</span>
+          <h1>Find Genuine Bike & Vehicle Parts Near You</h1>
+          <p>Instant access to trusted vehicle spare parts, local shop inventory, and real-time availability with premium search filters.</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" id="exploreBtn">Explore Parts</button>
+            <button class="btn btn-outline" id="browseBtn">Browse Categories</button>
+          </div>
+          <div class="hero-stats">
+            <div>
+              <strong>120+</strong>
+              <span>Verified Shops</span>
+            </div>
+            <div>
+              <strong>3400+</strong>
+              <span>Parts listed</span>
+            </div>
+            <div>
+              <strong>98%</strong>
+              <span>Stock accuracy</span>
+            </div>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-glow"></div>
+          <div class="hero-image"></div>
+        </div>
+      </section>
+
+      <section class="brands-block" id="brandsSection">
+        <div class="section-header">
+          <div>
+            <p class="section-label">Trusted Brands</p>
+            <h2>Top brands powering your ride.</h2>
+          </div>
+        </div>
+        <div class="brand-carousel" id="brandGrid"></div>
+      </section>
+
+      <section class="categories-block" id="categoriesSection">
+        <div class="section-header">
+          <div>
+            <p class="section-label">Browse Categories</p>
+            <h2>Find the right parts by system.</h2>
+          </div>
+        </div>
+        <div class="category-grid" id="categoryGrid"></div>
+      </section>
+
+      <section class="parts-block" id="partsSection">
+        <div class="section-header section-header-between">
+          <div>
+            <p class="section-label">Featured Inventory</p>
+            <h2>Premium parts curated for your vehicle.</h2>
+          </div>
+          <div class="parts-search">
+            <input type="search" id="searchInput" placeholder="Search parts, brands, or shops" />
+          </div>
+        </div>
+        <div class="parts-grid" id="partsGrid"></div>
+      </section>
+
+      <section class="inventory-block" id="inventorySection">
+        <div class="inventory-panel">
+          <div class="inventory-aside">
+            <p class="section-label">Inventory Finder</p>
+            <h2>Search availability by location and vehicle.</h2>
+            <div class="toggle-group" role="group">
+              <button class="toggle-btn active" data-vehicle="Bike">Bike</button>
+              <button class="toggle-btn" data-vehicle="Car">Car</button>
+              <button class="toggle-btn" data-vehicle="Scooter">Scooter</button>
+            </div>
+            <div class="filter-row">
+              <div class="filter-card">
+                <label>City</label>
+                <select id="locationSelect"></select>
+              </div>
+              <div class="filter-card">
+                <label>Stock</label>
+                <select id="stockSelect">
+                  <option value="all">All</option>
+                  <option value="in-stock">In stock</option>
+                  <option value="low">Low stock</option>
+                  <option value="out">Out</option>
+                </select>
+              </div>
+              <div class="filter-card">
+                <label>Sort</label>
+                <select id="sortSelect">
+                  <option value="price-asc">Price low → high</option>
+                  <option value="price-desc">Price high → low</option>
+                  <option value="distance-asc">Nearest</option>
+                </select>
+              </div>
+            </div>
+            <button class="btn btn-primary btn-wide" id="findPartsBtn">Find Parts</button>
+          </div>
+          <div class="inventory-result">
+            <div class="inventory-result-header">
+              <p>Inventory results</p>
+              <span id="resultCount">0 results</span>
+            </div>
+            <div class="inventory-cards" id="inventoryCards"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="map-block">
+        <div class="section-header">
+          <div>
+            <p class="section-label">Map Preview</p>
+            <h2>Selected shop location.</h2>
+          </div>
+        </div>
+        <div class="map-display">
+          <div class="map-placeholder">
+            <div class="map-pin"></div>
+            <div class="map-text">
+              <strong>Map view coming soon</strong>
+              <span>Placeholder for premium location display.</span>
+            </div>
+          </div>
+          <div class="map-info-card">
+            <p>Featured shop</p>
+            <h3>Velocity Moto Garage</h3>
+            <div class="map-info-grid">
+              <div><span>Stock Accuracy</span><strong>97%</strong></div>
+              <div><span>Estimated Time</span><strong>5 min</strong></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="bike-parts-ui.js"></script>
+</body>
+</html>
